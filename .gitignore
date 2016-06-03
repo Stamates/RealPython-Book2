@@ -12,3 +12,5 @@ Scripts
 Include
 Lib
 *.komodoproject
+build
+build*

@@ -22,15 +22,17 @@ def home():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    error = None
     if request.method == 'POST':
         if request.form['username'] != app.config['USERNAME']:
-            return render_template('login.html', error="Invalid username")
-        if request.form['password'] != app.config['PASSWORD']:
-            return render_template('login.html', error="Invalid password")
-        session['logged_in'] = True
-        flash('You were logged in')
-        return redirect(url_for('home'))
-    return render_template('login.html')
+             error = "Invalid username"
+        elif request.form['password'] != app.config['PASSWORD']:
+            error = "Invalid password"
+        else:
+            session['logged_in'] = True
+            flash('You were logged in')
+            return redirect(url_for('home'))
+    return render_template('login.html', error=error)
 
 @app.route('/logout')
 def logout():
